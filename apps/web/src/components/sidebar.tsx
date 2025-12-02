@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Home, Info, LayoutDashboard, Mail, Sun, Moon } from "lucide-react";
+import { Home, Info, LayoutDashboard, Sun, Moon } from "lucide-react";
 import { useTheme } from "./theme-provider";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
   {
     label: "Home",
-    href: "/",
+    href: "/home",
     icon: Home,
     iconColor: "text-[#6ECDC1]",
     animationClass: "group-hover:animate-icon-rotate-bounce",
@@ -39,13 +39,6 @@ const sidebarItems: SidebarItem[] = [
     animationClass:
       "group-hover:animate-icon-zoom-particles group-hover:animate-glow-blue",
   },
-  {
-    label: "Contact",
-    href: "/contact",
-    icon: Mail,
-    iconColor: "text-[#E88B9E]",
-    animationClass: "group-hover:animate-icon-tilt-flip",
-  },
 ];
 
 export function Sidebar() {
@@ -63,7 +56,7 @@ export function Sidebar() {
         {/* Logo Section */}
         <div className="flex items-center justify-between px-3 lg:px-4 py-4 border-b border-border/50 group-hover:px-4">
           <Link
-            href="/"
+            href="/home"
             className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
           >
             <div className="relative h-8 w-8 shrink-0">

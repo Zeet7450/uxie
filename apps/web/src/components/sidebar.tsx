@@ -55,10 +55,7 @@ export function Sidebar() {
       <div className="flex h-full flex-col overflow-y-auto">
         {/* Logo Section */}
         <div className="flex items-center justify-between px-3 lg:px-4 py-4 border-b border-border/50 group-hover:px-4">
-          <Link
-            href="/home"
-            className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
-          >
+          <Link href="/home" className="flex items-center gap-2">
             <div className="relative h-8 w-8 shrink-0">
               <Image
                 src="/logo/uxie.png"

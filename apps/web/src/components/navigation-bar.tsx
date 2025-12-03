@@ -26,10 +26,7 @@ export function NavigationBar() {
     <nav className="sticky top-0 z-50 h-14 md:h-16 glass border-b border-border/50 backdrop-blur-md">
       <div className="flex h-full items-center justify-between px-5 md:px-8">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 transition-all duration-200 hover:scale-105"
-        >
+        <Link href="/" className="flex items-center gap-2">
           <div className="relative h-8 w-8 md:h-8 md:w-8">
             <Image
               src="/logo/uxie.png"

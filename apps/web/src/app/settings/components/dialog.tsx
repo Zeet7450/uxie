@@ -81,8 +81,8 @@ export function DialogContent({
     <div
       className={cn(
         "fixed left-1/2 top-1/2 z-[1001] w-[500px] max-w-[95vw] max-h-[80vh] -translate-x-1/2 -translate-y-1/2",
-        "bg-card border border-border/60 rounded-2xl p-6 shadow-xl",
-        "glass overflow-y-auto",
+        "bg-card border border-border/60 rounded-2xl shadow-xl",
+        "glass overflow-hidden flex flex-col",
         "opacity-100 scale-100",
         "md:max-w-[480px]",
         className,
@@ -90,7 +90,9 @@ export function DialogContent({
       onClick={(e) => e.stopPropagation()}
       {...props}
     >
-      {children}
+      <div className="overflow-y-auto custom-scrollbar flex-1 px-6 py-6 pr-5">
+        {children}
+      </div>
     </div>
   );
 }

@@ -20,14 +20,14 @@ import {
   Bell,
   Cloud,
   Accessibility,
-  Edit,
-  ExternalLink,
   Volume2,
   Mail,
   Smartphone,
   ChevronRight,
 } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { useLanguage } from "@/components/language-provider";
+import { LanguageSelector } from "@/components/language-selector";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
@@ -38,6 +38,7 @@ interface SettingsModalProps {
 
 export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
   const { theme, setTheme } = useTheme();
+  const { t } = useLanguage();
   const [notifications, setNotifications] = React.useState(true);
   const [pushNotifications, setPushNotifications] = React.useState(true);
   const [emailNotifications, setEmailNotifications] = React.useState(true);
@@ -155,9 +156,9 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogOverlay />
-        <DialogContent className="max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-muted-foreground hover:scrollbar-thumb-primary">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle>Pengaturan</DialogTitle>
+            <DialogTitle>{t("settings.title")}</DialogTitle>
             <DialogClose />
           </DialogHeader>
           <Separator className="my-4" />
@@ -180,25 +181,10 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                 <p className="text-xs text-muted-foreground truncate">
                   {userData.email}
                 </p>
-                <div className="flex items-center gap-2 mt-1">
-                  <div
-                    className={cn(
-                      "h-2 w-2 rounded-full",
-                      userData.status === "online"
-                        ? "bg-[#6ECDC1]"
-                        : userData.status === "away"
-                          ? "bg-orange-500"
-                          : "bg-muted-foreground",
-                    )}
-                  />
-                  <span className="text-xs text-muted-foreground capitalize">
-                    {userData.status}
-                  </span>
-                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <p className="text-xs font-medium text-muted-foreground mb-1">
                   User ID
@@ -221,33 +207,31 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                   {userData.accountType}
                 </p>
               </div>
-              <div>
-                <p className="text-xs font-medium text-muted-foreground mb-1">
-                  Last Active
-                </p>
-                <p className="text-sm text-foreground">{userData.lastActive}</p>
-              </div>
             </div>
+          </div>
 
-            <div className="flex gap-3">
-              <Button variant="secondary" size="sm" className="h-9">
-                <Edit className="h-4 w-4 mr-2" />
-                Edit Profil
-              </Button>
-              <Button variant="ghost" size="sm" className="h-9">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Lihat Profil Lengkap
-              </Button>
+          {/* Language Section */}
+          <div className="mb-6">
+            <div className="mb-4">
+              <h3 className="text-base font-semibold text-foreground mb-2">
+                {t("settings.language")}
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-0">
+                {t("settings.language_description")}
+              </p>
+            </div>
+            <div className="w-full">
+              <LanguageSelector />
             </div>
           </div>
 
           {/* General Section */}
           <div>
             <h3 className="text-base font-semibold text-foreground mb-3">
-              Umum
+              {t("common.general")}
             </h3>
             <p className="text-xs text-muted-foreground mb-3">
-              Pengaturan umum aplikasi
+              {t("common.generalDescription")}
             </p>
 
             <div className="space-y-3">
@@ -261,10 +245,10 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                   )}
                   <div className="flex flex-col items-start min-w-0">
                     <span className="text-sm font-medium text-foreground leading-tight">
-                      Tema
+                      {t("settings.theme")}
                     </span>
                     <span className="text-xs text-muted-foreground leading-tight">
-                      Mengikuti pengaturan sistem perangkat Anda
+                      {t("settings.themeDescription")}
                     </span>
                   </div>
                 </div>
@@ -281,10 +265,10 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                     <Bell className="h-5 w-5 text-primary shrink-0" />
                     <div className="flex flex-col items-start min-w-0">
                       <span className="text-sm font-medium text-foreground leading-tight">
-                        Notifikasi
+                        {t("settings.notifications")}
                       </span>
                       <span className="text-xs text-muted-foreground leading-tight">
-                        Terima notifikasi dari aplikasi
+                        {t("settings.notificationsDescription")}
                       </span>
                     </div>
                   </div>
@@ -304,7 +288,7 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                       <div className="flex items-center gap-2">
                         <Smartphone className="h-4 w-4 text-muted-foreground" />
                         <span className="text-xs text-foreground">
-                          Notifikasi push di browser
+                          {t("settings.pushNotifications")}
                         </span>
                       </div>
                       <Toggle
@@ -320,7 +304,7 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                       <div className="flex items-center gap-2">
                         <Mail className="h-4 w-4 text-muted-foreground" />
                         <span className="text-xs text-foreground">
-                          Kirim ringkasan email
+                          {t("settings.emailNotifications")}
                         </span>
                       </div>
                       <Toggle
@@ -336,7 +320,7 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                       <div className="flex items-center gap-2">
                         <Volume2 className="h-4 w-4 text-muted-foreground" />
                         <span className="text-xs text-foreground">
-                          Suara notifikasi saat ada pesan
+                          {t("settings.sound")}
                         </span>
                       </div>
                       <Toggle
@@ -358,10 +342,10 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                   <Cloud className="h-5 w-5 text-primary shrink-0" />
                   <div className="flex flex-col items-start min-w-0">
                     <span className="text-sm font-medium text-foreground leading-tight">
-                      Simpan Otomatis
+                      {t("settings.autoSave")}
                     </span>
                     <span className="text-xs text-muted-foreground leading-tight">
-                      Simpan perubahan secara otomatis
+                      {t("settings.autoSaveDescription")}
                     </span>
                   </div>
                 </div>
@@ -382,10 +366,10 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                     <Accessibility className="h-5 w-5 text-primary shrink-0" />
                     <div className="flex flex-col items-start min-w-0">
                       <span className="text-sm font-medium text-foreground leading-tight">
-                        Aksesibilitas
+                        {t("settings.accessibility")}
                       </span>
                       <span className="text-xs text-muted-foreground leading-tight">
-                        Pengaturan untuk aksesibilitas
+                        {t("settings.accessibilityDescription")}
                       </span>
                     </div>
                   </div>
@@ -400,7 +384,7 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                   <div className="mt-3 ml-8 space-y-2">
                     <div className="flex items-center justify-between h-9 px-4 rounded-lg">
                       <span className="text-xs text-foreground">
-                        Kontras Tinggi
+                        {t("settings.highContrast")}
                       </span>
                       <Toggle
                         size="small"
@@ -410,7 +394,7 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
                     </div>
                     <div className="flex items-center justify-between h-9 px-4 rounded-lg">
                       <span className="text-xs text-foreground">
-                        Kurangi Animasi
+                        {t("settings.reduceAnimations")}
                       </span>
                       <Toggle
                         size="small"
@@ -426,7 +410,7 @@ export function SettingsModal({ open, onOpenChange }: SettingsModalProps) {
 
           <DialogFooter>
             <Button variant="ghost" onClick={() => onOpenChange(false)}>
-              Tutup
+              {t("settings.close")}
             </Button>
           </DialogFooter>
         </DialogContent>

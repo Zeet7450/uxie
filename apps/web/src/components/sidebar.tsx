@@ -7,32 +7,34 @@ import { SettingsButton } from "@/app/settings/settings-button";
 import { SettingsModal } from "@/app/settings/settings-modal";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/components/language-provider";
 import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   const pathname = usePathname();
   const isAuthPage = pathname === "/login" || pathname === "/signup";
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+  const { t } = useLanguage();
 
   const navigationItems = [
     {
       href: "/home",
       icon: Home,
-      label: "Home",
+      label: t("common.home"),
       iconColor: "text-[#6ECDC1]",
       animationClass: "group-hover:animate-icon-rotate-bounce",
     },
     {
       href: "/about",
       icon: Info,
-      label: "Tentang",
+      label: t("common.about"),
       iconColor: "text-primary",
       animationClass: "group-hover:animate-icon-pulse-jitter",
     },
     {
       href: "/dashboard",
       icon: LayoutDashboard,
-      label: "Dashboard",
+      label: t("common.dashboard"),
       iconColor: "text-[#E6D9F3] dark:text-[#E6D9F3]",
       animationClass:
         "group-hover:animate-icon-zoom-particles group-hover:animate-glow-blue",

@@ -1,8 +1,12 @@
 import { ThemeProvider } from "@/components/theme-provider";
+import { LanguageProvider } from "@/components/language-provider";
 import { Sidebar } from "@/components/sidebar";
 import { MainContentWrapper } from "@/components/main-content-wrapper";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getLanguageCookie } from "@/utils/language-cookie";
+import { isValidLanguage } from "@/utils/dictionary";
+import { DEFAULT_LANGUAGE } from "@/i18n/settings";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,13 +24,19 @@ export const metadata: Metadata = {
   description: "Platform Pendidikan Futuristik untuk Masa Depan Lebih Baik",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Ambil bahasa dari cookie
+  const cookieLanguage = await getLanguageCookie();
+  const currentLanguage = isValidLanguage(cookieLanguage)
+    ? cookieLanguage
+    : DEFAULT_LANGUAGE;
+
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang={currentLanguage} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -66,12 +76,14 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
-            <div className="flex flex-1">
-              <Sidebar />
-              <MainContentWrapper>{children}</MainContentWrapper>
+          <LanguageProvider initialLanguage={currentLanguage}>
+            <div className="flex min-h-screen flex-col">
+              <div className="flex flex-1">
+                <Sidebar />
+                <MainContentWrapper>{children}</MainContentWrapper>
+              </div>
             </div>
-          </div>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
